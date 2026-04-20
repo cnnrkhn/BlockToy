@@ -1,0 +1,41 @@
+{
+	"abstract" : true,
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library"
+		],
+		"files" : 
+		[
+			"external/glm-1.0.3/glm/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 45,
+				"parent" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"id" : "glm-header-only::@9f3c12752aa8019ba8ad",
+	"name" : "glm-header-only",
+	"paths" : 
+	{
+		"build" : "external/glm-1.0.3/glm",
+		"source" : "external/glm-1.0.3/glm"
+	},
+	"sources" : [],
+	"type" : "INTERFACE_LIBRARY"
+}

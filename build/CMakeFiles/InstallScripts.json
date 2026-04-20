@@ -1,0 +1,13 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/Khinj/AppState/CS4800/BlockToy/build/cmake_install.cmake",
+		"C:/Users/Khinj/AppState/CS4800/BlockToy/build/external/glad/cmake_install.cmake",
+		"C:/Users/Khinj/AppState/CS4800/BlockToy/build/external/glfw-3.4/cmake_install.cmake",
+		"C:/Users/Khinj/AppState/CS4800/BlockToy/build/external/glfw-3.4/src/cmake_install.cmake",
+		"C:/Users/Khinj/AppState/CS4800/BlockToy/build/external/glfw-3.4/docs/cmake_install.cmake",
+		"C:/Users/Khinj/AppState/CS4800/BlockToy/build/external/glm-1.0.3/cmake_install.cmake",
+		"C:/Users/Khinj/AppState/CS4800/BlockToy/build/external/glm-1.0.3/glm/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

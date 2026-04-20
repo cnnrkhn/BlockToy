@@ -1,0 +1,285 @@
+{
+	"configurations" : 
+	[
+		{
+			"abstractTargets" : 
+			[
+				{
+					"directoryIndex" : 2,
+					"id" : "Threads::Threads::@269f5e0abf7fd9407b0c",
+					"jsonFile" : "target-Threads__Threads-Debug-e01824dba81ff0d21c46.json",
+					"name" : "Threads::Threads",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "glm-header-only::@9f3c12752aa8019ba8ad",
+					"jsonFile" : "target-glm-header-only-Debug-7b0429e2de027ced4824.json",
+					"name" : "glm-header-only",
+					"projectIndex" : 3
+				}
+			],
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						5
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-f040eec181a89de70dbe.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.28"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				},
+				{
+					"build" : "external/glad",
+					"jsonFile" : "directory-external.glad-Debug-24b8884ca7b71ad043e2.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.28"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "external/glad",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"abstractTargetIndexes" : 
+					[
+						0
+					],
+					"build" : "external/glfw-3.4",
+					"childIndexes" : 
+					[
+						3,
+						4
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.glfw-3.4-Debug-d4e7bd40c55c76fd8be7.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "external/glfw-3.4",
+					"targetIndexes" : 
+					[
+						5
+					]
+				},
+				{
+					"build" : "external/glfw-3.4/src",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.glfw-3.4.src-Debug-5e3f3f1356d3825c8dae.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "external/glfw-3.4/src",
+					"targetIndexes" : 
+					[
+						3,
+						6
+					]
+				},
+				{
+					"build" : "external/glfw-3.4/docs",
+					"jsonFile" : "directory-external.glfw-3.4.docs-Debug-df89d2cde67361cce971.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "external/glfw-3.4/docs"
+				},
+				{
+					"build" : "external/glm-1.0.3",
+					"childIndexes" : 
+					[
+						6
+					],
+					"jsonFile" : "directory-external.glm-1.0.3-Debug-20e54507e7b85c9fa090.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.6"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 3,
+					"source" : "external/glm-1.0.3"
+				},
+				{
+					"abstractTargetIndexes" : 
+					[
+						1
+					],
+					"build" : "external/glm-1.0.3/glm",
+					"jsonFile" : "directory-external.glm-1.0.3.glm-Debug-477a5bce94d2e44a9711.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.6"
+					},
+					"parentIndex" : 5,
+					"projectIndex" : 3,
+					"source" : "external/glm-1.0.3/glm",
+					"targetIndexes" : 
+					[
+						4
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "ProjectBlockToy",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "Glad",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"abstractTargetIndexes" : 
+					[
+						0
+					],
+					"directoryIndexes" : 
+					[
+						2,
+						3,
+						4
+					],
+					"name" : "GLFW",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						3,
+						5,
+						6
+					]
+				},
+				{
+					"abstractTargetIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						5,
+						6
+					],
+					"name" : "glm",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "BlockToy::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-BlockToy-Debug-8cf1362a72f574390f28.json",
+					"name" : "BlockToy",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Visualizer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Visualizer-Debug-c306a4cd3fda9e2ff12e.json",
+					"name" : "Visualizer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "glad::@55512df44c152ef9a2ca",
+					"jsonFile" : "target-glad-Debug-2e071ba854ef5e8ff353.json",
+					"name" : "glad",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "glfw::@d2ad0d204de8827945e5",
+					"jsonFile" : "target-glfw-Debug-40c78c6462b92d7bd5a9.json",
+					"name" : "glfw",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "glm::@9f3c12752aa8019ba8ad",
+					"jsonFile" : "target-glm-Debug-92375fc2613bd6ad6eaf.json",
+					"name" : "glm",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "uninstall::@269f5e0abf7fd9407b0c",
+					"jsonFile" : "target-uninstall-Debug-8749f8a52cd242096e22.json",
+					"name" : "uninstall",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "update_mappings::@d2ad0d204de8827945e5",
+					"jsonFile" : "target-update_mappings-Debug-b8f4605bb21502a8d042.json",
+					"name" : "update_mappings",
+					"projectIndex" : 2
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/Khinj/AppState/CS4800/BlockToy/build",
+		"source" : "C:/Users/Khinj/AppState/CS4800/BlockToy"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	}
+}
