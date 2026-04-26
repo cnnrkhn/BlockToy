@@ -47,20 +47,40 @@ private:
     glm::vec3 rotation;
 
     /*
-        inverse inertia tensor for moment of inertia
+        inverse moment of inertia tensor with respect
+        to local coordinates
     */
     glm::mat3 inverseInertiaTensor;
 
+    /*
+        inverse moment of inertia tensor with respect
+        to world coordinates
+    */
     glm::mat3 inverseInertiaTensorWorld;
 
+    /*
+        net force on the body
+    */
     glm::vec3 forceAccum;
 
+    /*
+        net torque on the body
+    */
     glm::vec3 torqueAccum;
 
+    /*
+        linear acceleration of the body
+    */
     glm::vec3 acceleration;
 
+    /*
+        linear acceleration of the body last frame
+    */
     glm::vec3 lastFrameAcceleration;
 
+    /*
+        matrix used to transform between local and world coordinates
+    */
     glm::mat4 transformMatrix;
 
     /*
