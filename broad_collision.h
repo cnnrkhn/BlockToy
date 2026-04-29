@@ -1,6 +1,9 @@
 #include <glm/vec3.hpp>
 #include "rigid_body.h"
 
+#ifndef BROAD_COLLISION
+#define BROAD_COLLISION
+
 /*
     axis-aligned bounding box (rectanglular prism)
 */
@@ -114,3 +117,5 @@ private:
     void recalculateBoundingVolume();
 
 };
+
+#endif

@@ -1,5 +1,8 @@
 #include "rigid_body.h"
 
+#ifndef FORCE_GENERATORS
+#define FORCE_GENERATORS
+
 class ForceGenerator
 {
 public:
@@ -16,3 +19,5 @@ public:
 
     void updateForce(RigidBody* body, float duration) override;
 };
+
+#endif

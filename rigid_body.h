@@ -3,6 +3,9 @@
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/quaternion.hpp>
 
+#ifndef RIGID_BODY
+#define RIGID_BODY
+
 class RigidBody
 {
 private:
@@ -120,3 +123,5 @@ public:
     glm::quat getOrientation() const;
 
 };
+
+#endif

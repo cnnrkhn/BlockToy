@@ -1,6 +1,9 @@
 #include <vector>
 #include "force_gens.h"
 
+#ifndef PHYSICS_SIMULATION
+#define PHYSICS_SIMULATION
+
 class PhysicsSim
 {
 public:
@@ -30,3 +33,5 @@ private:
 
     Gravity g;
 };
+
+#endif
