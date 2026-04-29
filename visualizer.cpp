@@ -207,20 +207,23 @@ int main()
                glm::inverse(momentInertia)); // inverse moment of inertia
 
     // measure ellapsed_time between frames
-    float ellapsed_time = 0;
-    chrono::steady_clock::time_point start = chrono::steady_clock::now();
-    chrono::steady_clock::time_point end;
+    float ellapsedTime = 0;
+    chrono::steady_clock::time_point timePrev = chrono::steady_clock::now();
+    chrono::steady_clock::time_point timeNow;
+
+	// count number of frames
+	int numFrames = 0;
+	float secondCounter = 0;
 
     // Check if window was closed
     while(!glfwWindowShouldClose(window))
     {
         // physics
-        end = chrono::steady_clock::now();
+        timeNow = chrono::steady_clock::now();
 
-        ellapsed_time = chrono::duration_cast<chrono::nanoseconds>(end - start).count() / 1000000000.0f;
+        ellapsedTime = chrono::duration_cast<chrono::nanoseconds>(timeNow - timePrev).count() / 1000000000.0f;
 
-        //cout << "Ellapsed time:" << ellapsed_time << endl;
-        ps.runPhysics(ellapsed_time);
+        ps.runPhysics(ellapsedTime);
         glm::vec3 position = ps.getPositions()[0];
         glm::quat orientation = ps.getOrientations()[0];
 
@@ -229,8 +232,19 @@ int main()
 	    model = translate * rotate;
 
 	    mvp = projection * view * model;
+
+		// measure framerate
+		numFrames++;
+		secondCounter += ellapsedTime;
+		if (secondCounter >= 1.0f)
+		{
+			//cout << "FPS:" << numFrames << endl;
+			numFrames = 0;
+			secondCounter -= 1.0f;
+		}
+
         
-        start = chrono::steady_clock::now();
+        timePrev = timeNow;
 
         // input
         processInput(window);
@@ -274,8 +288,6 @@ int main()
         // swap buffers
         glfwPollEvents();
     }
-
-    end = chrono::steady_clock::now();
 
     // Cleanup VBO and shader
 	glDeleteBuffers(1, &vertexbuffer);
