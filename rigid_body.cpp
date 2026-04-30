@@ -90,13 +90,74 @@ float RigidBody::getMass() const
     return (1.0f/inverseMass);
 }
 
+float RigidBody::getInverseMass() const
+{
+    return inverseMass;
+}
+
+glm::mat3 RigidBody::getInertiaTensor() const
+{
+    return glm::inverse(inverseInertiaTensor);
+}
+
+glm::mat3 RigidBody::getInverseInertiaTensor() const
+{
+    return glm::mat3(inverseInertiaTensor);
+}
+
+glm::mat3 RigidBody::getInertiaTensorWorld() const
+{
+    return glm::inverse(inverseInertiaTensorWorld);
+}
+
+glm::mat3 RigidBody::getInverseInertiaTensorWorld() const
+{
+    return glm::mat3(inverseInertiaTensorWorld);
+}
+
+
 glm::vec3 RigidBody::getPosition() const
 {
-    return position;
+    return glm::vec3(position);
+}
+
+void RigidBody::setPosition(glm::vec3& pos)
+{
+    position = glm::vec3(pos);
 }
 
 glm::quat RigidBody::getOrientation() const
 {
-    return orientation;
+    return glm::quat(orientation);
 }
 
+void RigidBody::setOrientation(glm::quat& orientate)
+{
+    orientation = orientate;
+    orientation = glm::normalize(orientation);
+}
+
+glm::vec3 RigidBody::getVelocity() const
+{
+    return glm::vec3(velocity);
+}
+
+void RigidBody::addVelocity(glm::vec3& deltaVel)
+{
+    velocity += deltaVel;
+}
+
+glm::vec3 RigidBody::getRotation() const
+{
+    return glm::vec3(rotation);
+}
+
+void RigidBody::addRotation(glm::vec3& deltaRot)
+{
+    rotation += deltaRot;
+}
+
+glm::vec3 RigidBody::getLastFrameAcceleration() const
+{
+    return glm::vec3(lastFrameAcceleration);
+}

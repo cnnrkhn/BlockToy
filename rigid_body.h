@@ -118,10 +118,33 @@ public:
 
     float getMass() const;
 
+    float getInverseMass() const;
+
+    glm::mat3 getInertiaTensor() const;
+
+    glm::mat3 getInverseInertiaTensor() const;
+
+    glm::mat3 getInertiaTensorWorld() const;
+
+    glm::mat3 getInverseInertiaTensorWorld() const;
+
     glm::vec3 getPosition() const;
+
+    void setPosition(glm::vec3& pos);
 
     glm::quat getOrientation() const;
 
+    void setOrientation(glm::quat& orientate);
+
+    glm::vec3 getVelocity() const;
+
+    void addVelocity(glm::vec3& deltaVel);
+
+    glm::vec3 getRotation() const;
+
+    void addRotation(glm::vec3& deltaRot);
+
+    glm::vec3 getLastFrameAcceleration() const;
 };
 
 #endif
