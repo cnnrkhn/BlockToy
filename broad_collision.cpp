@@ -120,8 +120,8 @@ bool BVHNode::overlaps(BVHNode* other) const
     return volume.overlaps(&(other->volume));
 }
 
-uint64_t BVHNode::getPotentialContacts(PotentialContact* contacts, 
-                                       uint64_t limit) const
+uint32_t BVHNode::getPotentialContacts(PotentialContact* contacts, 
+                                       uint32_t limit) const
 {
     if (isLeaf() || limit == 0) return 0;
 
@@ -154,9 +154,9 @@ void BVHNode::insert(RigidBody* newBody, const BoundingBox& newVolume)
     }
 }
 
-uint64_t BVHNode::getPotentialContactsWith(PotentialContact* contacts,
+uint32_t BVHNode::getPotentialContactsWith(PotentialContact* contacts,
                                            BVHNode* other,
-                                           uint64_t limit) const
+                                           uint32_t limit) const
 {
     if (!overlaps(other) || limit == 0) return 0;
 
@@ -170,7 +170,7 @@ uint64_t BVHNode::getPotentialContactsWith(PotentialContact* contacts,
     if (other->isLeaf() ||
         (!isLeaf() && volume.getSize() >= other->volume.getSize()))
     {
-        uint64_t count = children[0]->getPotentialContactsWith(contacts,other,limit);
+        uint32_t count = children[0]->getPotentialContactsWith(contacts,other,limit);
 
         if (limit > count) 
         {

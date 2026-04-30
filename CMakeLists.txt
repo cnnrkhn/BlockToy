@@ -40,6 +40,10 @@ add_executable(Visualizer
     physics_sim.h
     broad_collision.cpp
     broad_collision.h
+    contacts.cpp
+    contacts.h
+    fine_collision.cpp
+    fine_collision.h
 ) 
 
 

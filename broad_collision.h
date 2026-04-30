@@ -106,13 +106,13 @@ public:
     /*
         checks the number of potential contacts from this node's descendants
     */
-    uint64_t getPotentialContacts(PotentialContact* contacts, 
-                                  uint64_t limit) const;
+    uint32_t getPotentialContacts(PotentialContact* contacts, 
+                                  uint32_t limit) const;
 
 private:
-    uint64_t getPotentialContactsWith(PotentialContact* contacts,
+    uint32_t getPotentialContactsWith(PotentialContact* contacts,
                                       BVHNode* other,
-                                      uint64_t limit) const;
+                                      uint32_t limit) const;
 
     void recalculateBoundingVolume();
 
