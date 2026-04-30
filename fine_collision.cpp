@@ -1,8 +1,10 @@
 #include <glm/exponential.hpp>
-#include <glm/gtx/norm.hpp>
 #include <limits>
 #include "fine_collision.h"
 #include "math_helper.h"
+
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/norm.hpp>
 
 // helper functions
 static inline float transformToAxis(const CollisionBox& box,
