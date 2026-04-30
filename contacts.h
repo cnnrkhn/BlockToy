@@ -5,6 +5,8 @@
 #ifndef CONTACTS
 #define CONTACTS
 
+class ContactResolver;
+
 class Contact
 {
     friend ContactResolver;
@@ -39,7 +41,7 @@ private:
     void calculateContactBasis();
 
     void applyVelocityChange(glm::vec3 velocityChange[2],
-                             glm::vec3 rotationChange[2]);
+                             glm::vec3 rotationChage[2]);
 
     void applyPositionChange(glm::vec3 linearChange[2],
                              glm::vec3 angularChange[2],
