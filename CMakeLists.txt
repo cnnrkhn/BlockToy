@@ -44,6 +44,7 @@ add_executable(Visualizer
     contacts.h
     fine_collision.cpp
     fine_collision.h
+    math_helper.h
 ) 
 
 

@@ -1,8 +1,8 @@
 #include <glm/exponential.hpp>
-#include <glm/vec4.hpp>
 #include <glm/gtx/norm.hpp>
 #include <limits>
 #include "fine_collision.h"
+#include "math_helper.h"
 
 // helper functions
 static inline float transformToAxis(const CollisionBox& box,
@@ -83,7 +83,7 @@ void fillPointFaceBoxBox(const CollisionBox& box1,
 
     contact->contactNormal = normal;
     contact->penetration = penetrate;
-    contact->contactPoint = glm::vec3(box2.getTransform() * glm::vec4(vertex,1));
+    contact->contactPoint = transformVec3byMat4(vertex, box2.getTransform());
     contact->setBodyData(box1.body, 
                          box2.body,
                          data->friction,
@@ -208,7 +208,7 @@ uint32_t CollisionDetector::boxAndPlane(const CollisionBox& box,
                                         mults[i][1], 
                                         mults[i][2]);
         vertexPos *= box.halfSizes;
-        vertexPos = glm::vec3(box.getTransform() * glm::vec4(vertexPos,1));
+        vertexPos = transformVec3byMat4(vertexPos, box.getTransform());
 
         float vertexDist = glm::dot(vertexPos, plane.direction);
 
@@ -315,8 +315,8 @@ uint32_t CollisionDetector::boxAndBox(const CollisionBox& box1,
             else if (glm::dot(box2.getAxis(i),axis) > 0) pointOnBox2Edge[i] = -pointOnBox2Edge[i];
         }
 
-        pointOnBox1Edge = glm::vec3(box1.getTransform() * glm::vec4(pointOnBox1Edge,1));
-        pointOnBox2Edge = glm::vec3(box2.getTransform() * glm::vec4(pointOnBox2Edge,1));
+        pointOnBox1Edge = transformVec3byMat4(pointOnBox1Edge, box1.getTransform());
+        pointOnBox2Edge = transformVec3byMat4(pointOnBox2Edge, box2.getTransform());
     
         glm::vec3 vertex = contactPoint(pointOnBox1Edge, 
                                         box1Axis,
