@@ -344,18 +344,18 @@ void Contact::calculateDesiredDeltaVelocity(float duration)
 
 // ContactResolver
 
-void ContactResolver::prepareContacts(Contact* contacts, 
-                                      uint32_t numContacts, 
+void ContactResolver::prepareContacts(std::vector<Contact> contacts, 
                                       float duration)
 {
-    Contact* lastContact = contacts + numContacts;
-    for (Contact* contact = contacts; contact < lastContact; contact++)
+    for (std::vector<Contact>::iterator c = contacts.begin();
+         c != contacts.end(); 
+         c++)
     {
-        contact->calculateInternalData(duration);
+        c->calculateInternalData(duration);
     }
 }
 
-void ContactResolver::adjustPositions(Contact* contacts, 
+void ContactResolver::adjustPositions(std::vector<Contact> contacts, 
                                       uint32_t numContacts, 
                                       float duration)
 {  
@@ -403,7 +403,7 @@ void ContactResolver::adjustPositions(Contact* contacts,
     }
 }
 
-void ContactResolver::adjustVelocities(Contact* contacts, 
+void ContactResolver::adjustVelocities(std::vector<Contact> contacts, 
                                        uint32_t numContacts, 
                                        float duration)
 {
@@ -452,13 +452,13 @@ void ContactResolver::adjustVelocities(Contact* contacts,
     }
 }
 
-void ContactResolver::resolveContacts(Contact* contacts,
+void ContactResolver::resolveContacts(std::vector<Contact> contacts,
                                       uint32_t numContacts,
                                       float duration)
 {
     if (numContacts == 0) return;
 
-    prepareContacts(contacts, numContacts, duration);
+    prepareContacts(contacts, duration);
 
     adjustPositions(contacts, numContacts, duration);
 

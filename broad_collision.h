@@ -110,8 +110,8 @@ public:
                                   uint32_t limit) const;
 
 private:
-    uint32_t getPotentialContactsWith(PotentialContact* contacts,
-                                      BVHNode* other,
+    uint32_t getPotentialContactsWith(BVHNode* other,
+                                      PotentialContact* contacts,
                                       uint32_t limit) const;
 
     void recalculateBoundingVolume();

@@ -2,6 +2,7 @@
 #include <glm/vec3.hpp>
 #include "rigid_body.h"
 #include "contacts.h"
+#include <vector>
 
 #ifndef FINE_COLLISION
 #define FINE_COLLISION
@@ -9,10 +10,20 @@
 class CollisionPrimitive
 {
 public:
+    /*
+        the rigid body represented by this primitive
+    */
     RigidBody* body;
-    glm::mat4 offset;
 
-    void calculateInternals();
+    /*
+        the offset of this primitive from the given rigid body
+    */
+    glm::mat4 offset = glm::mat4(1.0f);
+
+    /*
+        calculate internal data for primitive
+    */
+    void calculateInternalData();
 
     glm::vec3 getAxis(uint32_t index) const
     {
@@ -60,29 +71,48 @@ public:
 
 struct CollisionData
 {
-    Contact* contacts;
+    /*
+        resizeable array of contacts
+    */
+    std::vector<Contact> contacts;
 
-    uint32_t contactsLeft;
+    /*
+        how many more contacts the array can have
+    */
+    uint32_t contactsLeft = 20;
 
-    uint32_t contactCount;
+    /*
+        the friction used for collisions
+    */
+    float friction = 1.0f;
 
-    float friction;
+    /*
+        the restitution used for collisions
+        where 0 is maximum stickiness and
+        1 is maximum bounciness
+    */
+    float restitution = 0.0f;
 
-    float restitution;
-
-    float tolerance;
+    /*
+        how far objects can be beforee generating a contact 
+    */
+    float tolerance = 0;
 
     bool hasMoreContacts()
     {
         return contactsLeft > 0;
     }
 
-    void addContacts(uint32_t count)
+    void reset(uint32_t maxContacts)
     {
-        contactsLeft -= count;
-        contactCount += count;
+        contactsLeft = maxContacts;
+        contacts = std::vector<Contact>();
+    }
 
-        contacts += count;
+    void addContact(Contact& contact)
+    {
+        contactsLeft--;
+        contacts.push_back(contact);
     }
 };
 

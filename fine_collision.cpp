@@ -70,7 +70,7 @@ void fillPointFaceBoxBox(const CollisionBox& box1,
                          uint32_t best,
                          float penetrate)
 {
-    Contact* contact = data->contacts;
+    Contact contact;
 
     glm::vec3 normal = box1.getAxis(best);
     if (glm::dot(box1.getAxis(best),toCenter) < 0)
@@ -83,13 +83,15 @@ void fillPointFaceBoxBox(const CollisionBox& box1,
     if (glm::dot(box2.getAxis(1),normal) < 0) vertex.y = -vertex.y;
     if (glm::dot(box2.getAxis(2),normal) < 0) vertex.z = -vertex.z;
 
-    contact->contactNormal = normal;
-    contact->penetration = penetrate;
-    contact->contactPoint = transformVec3byMat4(vertex, box2.getTransform());
-    contact->setBodyData(box1.body, 
-                         box2.body,
-                         data->friction,
-                         data->restitution);
+    contact.contactNormal = normal;
+    contact.penetration = penetrate;
+    contact.contactPoint = transformVec3byMat4(vertex, box2.getTransform());
+    contact.setBodyData(box1.body, 
+                        box2.body,
+                        data->friction,
+                        data->restitution);
+    
+    data->addContact(contact);
 }
 
 static inline glm::vec3 contactPoint(const glm::vec3& ptOne,
@@ -132,6 +134,13 @@ static inline glm::vec3 contactPoint(const glm::vec3& ptOne,
 
         return conPtOne * 0.5f + conPtTwo * 0.5f;
     }
+}
+
+// CollisionPrimitive
+
+void CollisionPrimitive::calculateInternalData()
+{
+    transform = body->getTransformMatrix() * offset;
 }
 
 // IntersectionTests
@@ -202,10 +211,10 @@ uint32_t CollisionDetector::boxAndPlane(const CollisionBox& box,
     static float mults[8][3] = {{1,1,1},{-1,1,1},{1,-1,1},{-1,-1,1},
                                {1,1,-1},{-1,1,-1},{1,-1,-1},{-1,-1,-1}};
     
-    Contact* contact = data->contacts;
     uint32_t contactsUsed = 0;
     for (uint32_t i = 0; i < 8; i++)
     {
+        Contact contact;
         glm::vec3 vertexPos = glm::vec3(mults[i][0], 
                                         mults[i][1], 
                                         mults[i][2]);
@@ -216,22 +225,21 @@ uint32_t CollisionDetector::boxAndPlane(const CollisionBox& box,
 
         if (vertexDist <= plane.offset)
         {
-            contact->contactPoint = plane.direction;
-            contact->contactPoint *= (vertexDist - plane.offset);
-            contact->contactPoint += vertexPos;
-            contact->contactNormal = plane.direction;
-            contact->penetration = plane.offset - vertexDist;
+            contact.contactPoint = plane.direction;
+            contact.contactPoint *= (vertexDist - plane.offset);
+            contact.contactPoint += vertexPos;
+            contact.contactNormal = plane.direction;
+            contact.penetration = plane.offset - vertexDist;
 
-            contact->setBodyData(box.body, NULL,
+            contact.setBodyData(box.body, NULL,
                                  data->friction, data->restitution);
             
-            contact++;
             contactsUsed++;
             if (contactsUsed == data->contactsLeft) return contactsUsed;
         }
+        data->addContact(contact);
     }
 
-    data->addContacts(contactsUsed);
     return contactsUsed;
 }
 
@@ -285,13 +293,11 @@ uint32_t CollisionDetector::boxAndBox(const CollisionBox& box1,
     if (best < 3)
     {
         fillPointFaceBoxBox(box1, box2, toCenter* - 1.0f, data, best, penetrate);
-        data->addContacts(1);
         return 1;
     }
     else if (best < 6)
     {
         fillPointFaceBoxBox(box2, box1, toCenter* - 1.0f, data, best-3, penetrate);
-        data->addContacts(1);
         return 1;
     }
     else
@@ -328,16 +334,16 @@ uint32_t CollisionDetector::boxAndBox(const CollisionBox& box1,
                                         box2.halfSizes[box2AxisIndex],
                                         bestSingleAxis > 2);
 
-        Contact* contact = data->contacts;
+        Contact contact;
 
-        contact->penetration = penetrate;
-        contact->contactNormal = axis;
-        contact->contactPoint = vertex;
-        contact->setBodyData(box1.body,
+        contact.penetration = penetrate;
+        contact.contactNormal = axis;
+        contact.contactPoint = vertex;
+        contact.setBodyData(box1.body,
                              box2.body,
                              data->friction,
                              data->restitution);
-        data->addContacts(1);
+        data->addContact(contact);
         return 1;
     }
     return 0;

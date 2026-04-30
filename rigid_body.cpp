@@ -161,3 +161,8 @@ glm::vec3 RigidBody::getLastFrameAcceleration() const
 {
     return glm::vec3(lastFrameAcceleration);
 }
+
+glm::mat4 RigidBody::getTransformMatrix() const
+{
+    return glm::mat4(transformMatrix);
+}

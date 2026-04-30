@@ -145,6 +145,8 @@ public:
     void addRotation(glm::vec3& deltaRot);
 
     glm::vec3 getLastFrameAcceleration() const;
+
+    glm::mat4 getTransformMatrix() const;
 };
 
 #endif

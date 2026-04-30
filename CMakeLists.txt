@@ -28,7 +28,7 @@ add_subdirectory(external/glm-1.0.3)
 #    glm
 #) 
 
-add_executable(Visualizer
+add_executable(BlockToy
     visualizer.cpp
     shader.cpp
     shader.h
@@ -49,7 +49,7 @@ add_executable(Visualizer
 
 
 
-target_link_libraries(Visualizer
+target_link_libraries(BlockToy
     glad
     glfw
     glm

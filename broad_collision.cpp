@@ -125,7 +125,7 @@ uint32_t BVHNode::getPotentialContacts(PotentialContact* contacts,
 {
     if (isLeaf() || limit == 0) return 0;
 
-    return children[0]->getPotentialContactsWith(contacts,children[1],limit);
+    return children[0]->getPotentialContactsWith(children[1],contacts,limit);
 }
 
 void BVHNode::insert(RigidBody* newBody, const BoundingBox& newVolume)
@@ -154,8 +154,8 @@ void BVHNode::insert(RigidBody* newBody, const BoundingBox& newVolume)
     }
 }
 
-uint32_t BVHNode::getPotentialContactsWith(PotentialContact* contacts,
-                                           BVHNode* other,
+uint32_t BVHNode::getPotentialContactsWith(BVHNode* other,
+                                           PotentialContact* contacts,
                                            uint32_t limit) const
 {
     if (!overlaps(other) || limit == 0) return 0;
@@ -170,11 +170,11 @@ uint32_t BVHNode::getPotentialContactsWith(PotentialContact* contacts,
     if (other->isLeaf() ||
         (!isLeaf() && volume.getSize() >= other->volume.getSize()))
     {
-        uint32_t count = children[0]->getPotentialContactsWith(contacts,other,limit);
+        uint32_t count = children[0]->getPotentialContactsWith(other,contacts,limit);
 
         if (limit > count) 
         {
-            return count + children[1]->getPotentialContactsWith(contacts+count,other,limit+count);
+            return count + children[1]->getPotentialContactsWith(other,contacts+count,limit-count);
         } 
         else 
         {
@@ -183,11 +183,11 @@ uint32_t BVHNode::getPotentialContactsWith(PotentialContact* contacts,
     }
     else 
     {
-        unsigned count = getPotentialContactsWith(contacts,other->children[0],limit);
+        unsigned count = getPotentialContactsWith(other->children[0],contacts,limit);
 
         if (limit > count) 
         {
-            return count + getPotentialContactsWith(contacts+count,other->children[1],limit+count);
+            return count + getPotentialContactsWith(other->children[1],contacts+count,limit-count);
         }
         else
         {

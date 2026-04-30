@@ -1,6 +1,7 @@
 #include <glm/vec3.hpp>
 #include <glm/mat3x3.hpp>
 #include "rigid_body.h"
+#include <vector>
 
 #ifndef CONTACTS
 #define CONTACTS
@@ -9,7 +10,7 @@ class ContactResolver;
 
 class Contact
 {
-    friend ContactResolver;
+    friend class ContactResolver;
 
 public:
     RigidBody* body[2];
@@ -61,28 +62,41 @@ private:
 class ContactResolver
 {
 private:
-    uint32_t velocityIterations;
+    /*
+        number of iterations to perform when
+        resolving velocity
+    */
+    uint32_t velocityIterations = 5;
 
-    uint32_t positionIterations;
+    /*
+        number of iterations to perform when
+        resolving position
+    */
+    uint32_t positionIterations = 5;
 
-    float velocityEpsilon;
+    /*
+        velocities smaller than this value are considered to be zero
+    */
+    float velocityEpsilon = 0.01;
 
-    float positionEpsilon;
+    /*
+        positions smaller than this value are considered to be zero
+    */
+    float positionEpsilon = 0.01;
 
-    void prepareContacts(Contact* contacts, 
+    void prepareContacts(std::vector<Contact> contacts,  
+                         float duration);
+
+    void adjustPositions(std::vector<Contact> contacts, 
                          uint32_t numContacts, 
                          float duration);
 
-    void adjustPositions(Contact* contacts, 
-                         uint32_t numContacts, 
-                         float duration);
-
-    void adjustVelocities(Contact* contacts, 
+    void adjustVelocities(std::vector<Contact> contacts, 
                           uint32_t numContacts, 
                           float duration);
 
 public:
-    void resolveContacts(Contact* contacts,
+    void resolveContacts(std::vector<Contact> contacts,
                          uint32_t numContacts,
                          float duration);
 };

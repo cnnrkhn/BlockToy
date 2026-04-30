@@ -78,7 +78,7 @@ int main()
 	// Projection matrix
 	glm::mat4 projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 	// Camera matrix
-	glm::mat4 view = glm::lookAt(glm::vec3(4,3,-3), glm::vec3(0,2,0), glm::vec3(0,1,0));
+	glm::mat4 view = glm::lookAt(glm::vec3(3,0,0), glm::vec3(0,0,0), glm::vec3(0,1,0));
 	// Model matrix
     glm::quat q = glm::quat(1,2,3,4);
     q = glm::normalize(q);
@@ -197,13 +197,13 @@ int main()
     );
 
     // add rigid body
-    ps.addBody(invMass,          // inverse mass
+    ps.addBox(invMass,          // inverse mass
                0.99f,            // linear damping
                0.99f,            // angular damping
                glm::vec3(0,3,0), // position
                q,                // orientation
-               glm::vec3(-5,1,0),  // velocity
-               glm::vec3(-0.5f,3,5),  // rotation
+               glm::vec3(0,3,0),  // velocity
+               glm::vec3(0,0,0),  // rotation
                glm::inverse(momentInertia)); // inverse moment of inertia
 
     // measure ellapsed_time between frames
@@ -215,6 +215,9 @@ int main()
 	int numFrames = 0;
 	float secondCounter = 0;
 
+	// initialFrane for physics sim
+	ps.startFrame();
+
     // Check if window was closed
     while(!glfwWindowShouldClose(window))
     {
@@ -222,6 +225,7 @@ int main()
         timeNow = chrono::steady_clock::now();
 
         ellapsedTime = chrono::duration_cast<chrono::nanoseconds>(timeNow - timePrev).count() / 1000000000.0f;
+		//ellapsedTime = 0.0;
 
         ps.runPhysics(ellapsedTime);
         glm::vec3 position = ps.getPositions()[0];
@@ -231,6 +235,8 @@ int main()
         translate = glm::translate(glm::mat4(1.0f),position);
 	    model = translate * rotate;
 
+		view = glm::lookAt(glm::vec3(5,0,0), position * 0.5f, glm::vec3(0,1,0));
+
 	    mvp = projection * view * model;
 
 		// measure framerate
@@ -239,6 +245,7 @@ int main()
 		if (secondCounter >= 1.0f)
 		{
 			//cout << "FPS:" << numFrames << endl;
+			//cout << "Ellapsed Time:" << ellapsedTime << endl;
 			numFrames = 0;
 			secondCounter -= 1.0f;
 		}
