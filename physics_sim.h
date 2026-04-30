@@ -15,16 +15,17 @@ public:
     PhysicsSim();
 
     void addBox(float inverseMass,
-                float linearDamping,
-                float angularDamping,
-                const glm::vec3& position,
-                const glm::quat& orientation,
-                const glm::vec3& velocity,
-                const glm::vec3& rotation,
-                const glm::mat3& inverseInertiaTensor);
+                 float linearDamping,
+                 float angularDamping,
+                 const glm::vec3& position,
+                 const glm::quat& orientation,
+                 const glm::vec3& velocity,
+                 const glm::vec3& rotation,
+                 const glm::mat3& inverseInertiaTensor,
+                 const glm::vec3& halfWidths);
 
     void startFrame();
-
+    
     void runPhysics(float duration);
 
     std::vector<glm::vec3> getPositions();
@@ -32,7 +33,7 @@ public:
     std::vector<glm::quat> getOrientations();
 
 private:
-    CollisionBoxes boxes; 
+    CollisionBoxes boxes;
 
     CollisionPlane floor {glm::vec3(0.0f,0.5f,0.0f), 
                           -1.0f};

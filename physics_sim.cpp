@@ -12,7 +12,8 @@ void PhysicsSim::addBox(float inverseMass,
                          const glm::quat& orientation,
                          const glm::vec3& velocity,
                          const glm::vec3& rotation,
-                         const glm::mat3& inverseInertiaTensor)
+                         const glm::mat3& inverseInertiaTensor,
+                         const glm::vec3& halfWidths)
 {
     RigidBody* rb = new RigidBody(inverseMass,
                                   linearDamping,
@@ -23,9 +24,9 @@ void PhysicsSim::addBox(float inverseMass,
                                   rotation,
                                   inverseInertiaTensor);
     
-    CollisionBox box;
+    CollisionBox box(rb, glm::translate(glm::mat4(1.0f),position), halfWidths);
     box.body = rb;
-    box.halfSizes = glm::vec3(1.0f);
+    box.halfSizes = halfWidths;
 
     Contact con;
     con.setBodyData(rb, NULL, data.friction, data.restitution);
@@ -52,6 +53,8 @@ void PhysicsSim::runPhysics(float duration)
          b != boxes.end(); 
          b++)
     {
+        g.updateForce(b->body,duration);
+        b->body->integrate(duration);
         b->calculateInternalData();
         if (!CollisionDetector::boxAndPlane((*b), floor, &data))
         {
@@ -59,12 +62,8 @@ void PhysicsSim::runPhysics(float duration)
         }
         
         cr.resolveContacts(data.contacts,
-                          data.contacts.size(),
+                           data.contacts.size(),
                            duration);
-                           
-
-        g.updateForce(b->body,duration);
-        b->body->integrate(duration);
     }
 }
 

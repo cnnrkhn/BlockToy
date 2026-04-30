@@ -331,14 +331,14 @@ void Contact::calculateDesiredDeltaVelocity(float duration)
                                     contactNormal);
     }
 
-    float thisRestitution = restitution;
+    float appliedRestitution = restitution;
     if (abs(contactVelocity.x) < velocityLimit)
     {
-        thisRestitution = 0.0f;
+        appliedRestitution = 0.0f;
     }
 
     desiredDeltaVelocity = -contactVelocity.x -
-                           thisRestitution *
+                           appliedRestitution *
                            (contactVelocity.x - velocityFromAcc);
 }
 

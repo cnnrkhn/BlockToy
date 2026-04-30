@@ -143,6 +143,17 @@ void CollisionPrimitive::calculateInternalData()
     transform = body->getTransformMatrix() * offset;
 }
 
+// CollisionBox
+
+CollisionBox::CollisionBox(RigidBody* b, glm::mat4 off, glm::vec3 hs)
+{
+    body = b;
+    offset = off;
+    halfSizes = hs;
+
+    calculateInternalData();
+}
+
 // IntersectionTests
 bool IntersectionTests::boxAndPlane(const CollisionBox& box,
                                     const CollisionPlane& plane)
@@ -233,11 +244,12 @@ uint32_t CollisionDetector::boxAndPlane(const CollisionBox& box,
 
             contact.setBodyData(box.body, NULL,
                                  data->friction, data->restitution);
-            
+                
+            data->addContact(contact);
             contactsUsed++;
             if (contactsUsed == data->contactsLeft) return contactsUsed;
         }
-        data->addContact(contact);
+        
     }
 
     return contactsUsed;
