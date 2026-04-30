@@ -78,12 +78,13 @@ int main()
 	// Projection matrix
 	glm::mat4 projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 	// Camera matrix
-	glm::mat4 view = glm::lookAt(glm::vec3(3,0,0), glm::vec3(0,0,0), glm::vec3(0,1,0));
+	glm::mat4 view = glm::lookAt(glm::vec3(10,2,0), glm::vec3(0,0,0), glm::vec3(0,1,0));
 	// Model matrix
-    glm::quat q = glm::quat(1,2,3,4);
+    glm::quat q = glm::quat(1,1,1,1);
     q = glm::normalize(q);
     glm::mat4 rotate = glm::mat4_cast(q);
-    glm::mat4 translate = glm::translate(glm::mat4(1.0f),glm::vec3(0,3,0));
+	glm::vec3 position = glm::vec3(0.0f,2.0f,0.0f);
+    glm::mat4 translate = glm::translate(glm::mat4(1.0f),position);
 	glm::mat4 model = translate * rotate;
 	// Our ModelViewProjection 
 	glm::mat4 mvp = projection * view * model;
@@ -182,13 +183,13 @@ int main()
     // initialize physics simulation
     PhysicsSim ps;
 
-    float invMass = 1.0f;
+    float invMass = 0.5f;
 
     // calculate moment of inertia for a box
     float hh = 2 * 2;
     float ww = 2 * 2;
     float dd = 2 * 2;
-    float massDiv12 = 1.0f / 12.0f * invMass;
+    float massDiv12 = (1.0f / 12.0f) * invMass;
 
     glm::mat3 momentInertia = glm::mat3(
         massDiv12 * (hh + dd), 0,                     0,
@@ -197,14 +198,15 @@ int main()
     );
 
     // add rigid body
-    ps.addBox(invMass,          // inverse mass
+    ps.addBody(invMass,          // inverse mass
                0.99f,            // linear damping
                0.99f,            // angular damping
-               glm::vec3(0,3,0), // position
+               position, // position
                q,                // orientation
-               glm::vec3(0,3,0),  // velocity
+               glm::vec3(0,0,0),  // velocity
                glm::vec3(0,0,0),  // rotation
-               glm::inverse(momentInertia)); // inverse moment of inertia
+               glm::inverse(momentInertia), // inverse moment of inertia
+			   glm::vec3(1,1,1)); // halfWidths
 
     // measure ellapsed_time between frames
     float ellapsedTime = 0;
@@ -214,9 +216,6 @@ int main()
 	// count number of frames
 	int numFrames = 0;
 	float secondCounter = 0;
-
-	// initialFrane for physics sim
-	ps.startFrame();
 
     // Check if window was closed
     while(!glfwWindowShouldClose(window))
@@ -235,7 +234,7 @@ int main()
         translate = glm::translate(glm::mat4(1.0f),position);
 	    model = translate * rotate;
 
-		view = glm::lookAt(glm::vec3(5,0,0), position * 0.5f, glm::vec3(0,1,0));
+		//view = glm::lookAt(glm::vec3(5,0,0), position * 0.5f, glm::vec3(0,1,0));
 
 	    mvp = projection * view * model;
 

@@ -27,7 +27,8 @@ public:
 
     glm::vec3 getAxis(uint32_t index) const
     {
-        return glm::vec3(transform[index]);
+        glm::vec4 axis = transform[index];
+        return glm::vec3(axis);
     }
 
     const glm::mat4& getTransform() const
@@ -43,6 +44,8 @@ class CollisionBox : public CollisionPrimitive
 {
 public:
     glm::vec3 halfSizes;
+
+    CollisionBox(RigidBody* b, glm::mat4 off, glm::vec3 hs);
 };
 
 class CollisionPlane
@@ -84,14 +87,14 @@ struct CollisionData
     /*
         the friction used for collisions
     */
-    float friction = 1.0f;
+    float friction = 0.1f;
 
     /*
         the restitution used for collisions
         where 0 is maximum stickiness and
         1 is maximum bounciness
     */
-    float restitution = 0.0f;
+    float restitution = 0.1f;
 
     /*
         how far objects can be beforee generating a contact 

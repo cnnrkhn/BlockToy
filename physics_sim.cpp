@@ -5,14 +5,15 @@ PhysicsSim::PhysicsSim()
 
 }
 
-void PhysicsSim::addBox(float inverseMass,
+void PhysicsSim::addBody(float inverseMass,
                          float linearDamping,
                          float angularDamping,
                          const glm::vec3& position,
                          const glm::quat& orientation,
                          const glm::vec3& velocity,
                          const glm::vec3& rotation,
-                         const glm::mat3& inverseInertiaTensor)
+                         const glm::mat3& inverseInertiaTensor,
+                         const glm::vec3& halfWidths)
 {
     RigidBody* rb = new RigidBody(inverseMass,
                                   linearDamping,
@@ -22,27 +23,17 @@ void PhysicsSim::addBox(float inverseMass,
                                   velocity,
                                   rotation,
                                   inverseInertiaTensor);
+
+    rb->clearAccumulators();
+    rb->updateData();
     
-    CollisionBox box;
-    box.body = rb;
-    box.halfSizes = glm::vec3(1.0f);
-
-    Contact con;
-    con.setBodyData(rb, NULL, data.friction, data.restitution);
-    data.addContact(con);
-
-    boxes.push_back(box);
-}
-
-void PhysicsSim::startFrame()
-{
-    for (CollisionBoxes::iterator b = boxes.begin();
-         b != boxes.end(); 
-         b++)
+    if (!hierarchy)
     {
-        b->body->clearAccumulators();
-        b->body->updateData();
-        b->calculateInternalData();
+        hierarchy = new BVHNode(NULL, BoundingBox(position, halfWidths), rb);
+    }
+    else
+    {
+        hierarchy->insert(rb, BoundingBox(position, halfWidths));
     }
 }
 
@@ -52,18 +43,19 @@ void PhysicsSim::runPhysics(float duration)
          b != boxes.end(); 
          b++)
     {
-        if (!CollisionDetector::boxAndPlane((*b), floor, &data))
+        g.updateForce(b->body,duration);
+        b->body->integrate(duration);
+        b->calculateInternalData();
+
+        uint32_t contactsNeeded = CollisionDetector::boxAndPlane((*b), floor, &data);
+        if (!contactsNeeded)
         {
             data.reset(data.contacts.size() + data.contactsLeft);
         }
         
         cr.resolveContacts(data.contacts,
-                          data.contacts.size(),
+                           data.contacts.size(),
                            duration);
-                           
-
-        g.updateForce(b->body,duration);
-        b->body->integrate(duration);
     }
 }
 
