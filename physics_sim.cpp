@@ -52,6 +52,7 @@ void PhysicsSim::runPhysics(float duration)
          b != boxes.end(); 
          b++)
     {
+        b->calculateInternalData();
         if (!CollisionDetector::boxAndPlane((*b), floor, &data))
         {
             data.reset(data.contacts.size() + data.contactsLeft);
