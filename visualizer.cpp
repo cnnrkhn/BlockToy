@@ -80,11 +80,13 @@ int main()
 	glm::mat4 projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 	// Camera matrix
 	glm::mat4 view = glm::lookAt(glm::vec3(10,2,0), glm::vec3(0,0,0), glm::vec3(0,1,0));
+	
+	
 	// Model matrix
-    glm::quat q = glm::quat(1,2,3,4);
+    glm::quat q = glm::quat(1,2,3,4); // orientation of box
     q = glm::normalize(q);
     glm::mat4 rotate = glm::mat4_cast(q);
-	glm::vec3 position = glm::vec3(0.0f,2.0f,0.0f);
+	glm::vec3 position = glm::vec3(0.0f,2.0f,0.0f); // position of box
     glm::mat4 translate = glm::translate(glm::mat4(1.0f),position);
 	glm::mat4 model = translate * rotate;
 	// Our ModelViewProjection 
@@ -199,10 +201,12 @@ int main()
     );
 
     // add rigid body
-    ps.addBox(invMass,          // inverse mass
+	// change these to produce different behavior
+	// position and orientation are set above where the mvp is created
+    ps.addBox(invMass,           // inverse mass
                0.99f,            // linear damping
                0.99f,            // angular damping
-               position, // position
+               position,         // position
                q,                // orientation
                glm::vec3(-0.5f,5.0f,0.0f),  // velocity
                glm::vec3(-0.5f,0.3f,1.0f),  // rotation
