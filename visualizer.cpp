@@ -83,7 +83,7 @@ int main()
 	
 	
 	// Model matrix
-    glm::quat q = glm::quat(1,2,3,4); // orientation of box
+    glm::quat q = glm::quat(1,1,1,1); // orientation of box
     q = glm::normalize(q);
     glm::mat4 rotate = glm::mat4_cast(q);
 	glm::vec3 position = glm::vec3(0.0f,2.0f,0.0f); // position of box
@@ -208,8 +208,8 @@ int main()
                0.99f,            // angular damping
                position,         // position
                q,                // orientation
-               glm::vec3(-0.5f,5.0f,0.0f),  // velocity
-               glm::vec3(-0.5f,0.3f,1.0f),  // rotation
+               glm::vec3(0.0f,0.0f,0.0f),  // velocity
+               glm::vec3(0.0f,0.0f,0.0f),  // rotation
                glm::inverse(momentInertia), // inverse moment of inertia
 			   glm::vec3(1,1,1)); // halfWidths
 
