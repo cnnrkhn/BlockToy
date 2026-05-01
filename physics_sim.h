@@ -34,17 +34,19 @@ public:
 
     std::vector<glm::quat> getOrientations();
 
+    std::vector<glm::vec3> getRotations();
+
 private:
     CollisionBoxes boxes;
 
-    CollisionPlane floor {glm::vec3(0.0f,0.5f,0.0f), 
+    CollisionPlane floor {glm::vec3(0.0f,1.0f,0.0f), 
                           -1.0f};
     
     CollisionData data;
 
     ContactResolver cr;
 
-    Gravity g {glm::vec3(0.0f,-1.0f,0.0f)};
+    Gravity g {glm::vec3(0.0f,-5.0f,0.0f)};
 };
 
 #endif

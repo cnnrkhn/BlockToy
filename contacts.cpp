@@ -177,7 +177,7 @@ void Contact::applyPositionChange(glm::vec3 linearChange[2],
             q += glm::quat(0, angularChange[i]) * q * 0.5f;
             body[i]->setOrientation(q);
 
-            body[i]->updateData();
+            //body[i]->updateData();
         }
 }
 

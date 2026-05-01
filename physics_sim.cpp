@@ -116,3 +116,19 @@ std::vector<glm::quat> PhysicsSim::getOrientations()
 
     return orientations;
 }
+
+std::vector<glm::vec3> PhysicsSim::getRotations()
+{
+    std::vector<glm::vec3> rotations;
+
+    for (CollisionBoxes::iterator b = boxes.begin();
+         b != boxes.end(); 
+         b++)
+    {
+        glm::vec3 pos = b->body->getPosition();
+
+        rotations.push_back(pos);
+    }
+
+    return rotations;
+}

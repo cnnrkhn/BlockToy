@@ -94,7 +94,7 @@ struct CollisionData
         where 0 is maximum stickiness and
         1 is maximum bounciness
     */
-    float restitution = 0.1f;
+    float restitution = 0.9f;
 
     /*
         how far objects can be beforee generating a contact 

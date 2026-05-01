@@ -199,12 +199,12 @@ int main()
 
     // add rigid body
     ps.addBox(invMass,          // inverse mass
-               0.90f,            // linear damping
-               0.90f,            // angular damping
+               0.99f,            // linear damping
+               0.99f,            // angular damping
                position, // position
                q,                // orientation
-               glm::vec3(0.0f,0,0),  // velocity
-               glm::vec3(0,0,0),  // rotation
+               glm::vec3(-0.1f,0.0f,0.1f),  // velocity
+               glm::vec3(0,0.1f,0),  // rotation
                glm::inverse(momentInertia), // inverse moment of inertia
 			   glm::vec3(1,1,1)); // halfWidths
 
@@ -247,16 +247,32 @@ int main()
 		if (secondCounter >= 1.0f)
 		{
 			//glm::vec3 velocities = ps.getVelocities()[0];
-			//cout << "FPS:" << numFrames << endl;
-			//cout << "Ellapsed Time:" << ellapsedTime << endl;
-			//float kinetic = 0.5f * glm::dot(velocities, velocities);
-			//cout << "Kinetic Energy: " << kinetic << endl;
-
 			//float x = velocities.x;
 			//float y = velocities.y;
 			//float z = velocities.z;
 			//cout << "Velocity x: " << x << " y: " << y << " z: " << z << endl;
+			//float kinetic = 0.5f * glm::dot(velocities, velocities);
+			//cout << "Kinetic Energy: " << kinetic << endl;
 
+			glm::vec3 rotations = ps.getRotations()[0];
+			float x = rotations.x;
+			float y = rotations.y;
+			float z = rotations.z;
+			cout << "Rotation x: " << x << " y: " << y << " z: " << z << endl;
+
+			//float x = position.x;
+			//float y = position.y;
+			//float z = position.z;
+			//cout << "Position x: " << x << " y: " << y << " z: " << z << endl;
+
+			//float x = orientation.x;
+			//float y = orientation.y;
+			//float z = orientation.z;
+			//float w = orientation.w;
+			//cout << "Orientation x: " << x << " y: " << y << " z: " << z << " w: " << w  << endl;
+
+			//cout << "FPS:" << numFrames << endl;
+			//cout << "Ellapsed Time:" << ellapsedTime << endl;
 			numFrames = 0;
 			secondCounter -= 1.0f;
 		}

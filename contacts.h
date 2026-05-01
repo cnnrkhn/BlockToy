@@ -66,13 +66,13 @@ private:
         number of iterations to perform when
         resolving velocity
     */
-    uint32_t velocityIterations = 3;
+    uint32_t velocityIterations = 10;
 
     /*
         number of iterations to perform when
         resolving position
     */
-    uint32_t positionIterations = 3;
+    uint32_t positionIterations = 10;
 
     /*
         velocities smaller than this value are considered to be zero
