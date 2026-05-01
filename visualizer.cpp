@@ -87,8 +87,15 @@ int main()
 	glm::vec3 position = glm::vec3(0.0f,2.0f,0.0f);
     glm::mat4 translate = glm::translate(glm::mat4(1.0f),position);
 	glm::mat4 model = translate * rotate;
+	
 	// Our ModelViewProjection 
-	glm::mat4 mvp = projection * view * model;
+	std::vector<glm::mat4> mvps;
+
+	glm::mat4 mvp1 = projection * view * model;
+	mvps.push_back(mvp1);
+
+	glm::mat4 mvp2 = projection * view * model;
+	mvps.push_back(mvp2);
 
     static const GLfloat g_vertex_buffer_data[] = { 
 		-1.0f,-1.0f,-1.0f,
@@ -198,14 +205,26 @@ int main()
         0,                     0,                     massDiv12 * (ww + hh)
     );
 
-    // add rigid body
+    // add rigid bodies
+	uint32_t num_boxes = 2;
+
     ps.addBox(invMass,          // inverse mass
-               0.99f,            // linear damping
-               0.99f,            // angular damping
+               0.90f,            // linear damping
+               0.90f,            // angular damping
                position, // position
                q,                // orientation
                glm::vec3(-0.1f,0.0f,0.1f),  // velocity
-               glm::vec3(0,0.1f,0),  // rotation
+               glm::vec3(0,0.0f,0),  // rotation
+               glm::inverse(momentInertia), // inverse moment of inertia
+			   glm::vec3(1,1,1)); // halfWidths
+	
+	ps.addBox(invMass,          // inverse mass
+               0.90f,            // linear damping
+               0.90f,            // angular damping
+               position + glm::vec3(0.0f,3.0f,0.0f), // position
+               q,                // orientation
+               glm::vec3(0.0f,0.0f,0.1f),  // velocity
+               glm::vec3(0,0.0f,0),  // rotation
                glm::inverse(momentInertia), // inverse moment of inertia
 			   glm::vec3(1,1,1)); // halfWidths
 
@@ -231,16 +250,10 @@ int main()
 		//ellapsedTime = 0.0;
 
         ps.runPhysics(ellapsedTime);
-        glm::vec3 position = ps.getPositions()[0];
-        glm::quat orientation = ps.getOrientations()[0];
-
-        rotate = glm::mat4_cast(orientation);
-        translate = glm::translate(glm::mat4(1.0f),position);
-	    model = translate * rotate;
+        vector<glm::vec3> positions = ps.getPositions();
+        vector<glm::quat> orientations = ps.getOrientations();
 
 		//view = glm::lookAt(glm::vec3(5,0,0), position * 0.5f, glm::vec3(0,1,0));
-
-	    mvp = projection * view * model;
 
 		// measure framerate
 		numFrames++;
@@ -285,21 +298,32 @@ int main()
         processInput(window);
 
         // rendering
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        shaders.use();
+		for (uint32_t i = 0; i < num_boxes; i++)
+		{
+			// calculate MVP
+			rotate = glm::mat4_cast(orientations[i]);
+        	translate = glm::translate(glm::mat4(1.0f),positions[i]);
+	    	model = translate * rotate;
 
-        glUniformMatrix4fv(matrixID, 1, GL_FALSE, &mvp[0][0]);
+			mvps[i] = projection * view * model;
 
-        glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-		glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,(void*)0);
+        	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-		glVertexAttribPointer(1,3,GL_FLOAT,GL_FALSE,0,(void*)0);
+        	shaders.use();
 
-        glDrawArrays(GL_TRIANGLES, 0, 12*3); // 12*3 indices starting at 0 -> 12 triangles
+        	glUniformMatrix4fv(matrixID, 1, GL_FALSE, &mvps[i][0][0]);
+
+        	glEnableVertexAttribArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+			glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,(void*)0);
+
+        	glEnableVertexAttribArray(1);
+			glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
+			glVertexAttribPointer(1,3,GL_FLOAT,GL_FALSE,0,(void*)0);
+
+        	glDrawArrays(GL_TRIANGLES, 0, 12*3);
+		}
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);

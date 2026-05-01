@@ -28,9 +28,29 @@ void PhysicsSim::addBox(float inverseMass,
     box.body = rb;
     box.halfSizes = halfWidths;
 
+    CollisionData d;
+
     Contact con;
-    con.setBodyData(rb, NULL, data.friction, data.restitution);
-    data.addContact(con);
+    con.setBodyData(rb, NULL, d.friction, d.restitution);
+    d.addContact(con);
+
+    planeData.push_back(d);
+
+    if (boxes.size() > 0)
+    {
+        for (CollisionBoxes::iterator b = boxes.begin();
+             b != boxes.end(); 
+             b++)
+        {
+            CollisionData d;
+
+            Contact con;
+            con.setBodyData(rb, b->body, d.friction, d.restitution);
+            d.addContact(con);
+
+            boxData.push_back(d);
+        }
+    }
 
     boxes.push_back(box);
 }
@@ -49,21 +69,38 @@ void PhysicsSim::startFrame()
 
 void PhysicsSim::runPhysics(float duration)
 {
-    for (CollisionBoxes::iterator b = boxes.begin();
-         b != boxes.end(); 
-         b++)
+    for(uint32_t j = 0; j < boxes.size(); j++)
     {
-        g.updateForce(b->body,duration);
-        b->body->integrate(duration);
-        b->calculateInternalData();
-        if (!CollisionDetector::boxAndPlane((*b), floor, &data))
+        g.updateForce(boxes[j].body,duration);
+        (boxes[j].body)->integrate(duration);
+        boxes[j].calculateInternalData();
+
+        for(uint32_t i = 0; i < planeData.size(); i++)
         {
-            data.reset(data.contacts.size() + data.contactsLeft);
-        }
+            if (!CollisionDetector::boxAndPlane((boxes[j]), floor, &planeData[i]))
+            {
+                planeData[i].reset(planeData[i].contacts.size() + planeData[i].contactsLeft);
+            }
         
-        cr.resolveContacts(data.contacts,
-                           data.contacts.size(),
-                           duration);
+            cr.resolveContacts(planeData[i].contacts,
+                               planeData[i].contacts.size(),
+                               duration);
+        }
+
+        for(uint32_t i = 0; i < boxData.size(); i++)
+        {
+            if(boxData[i].contacts[0].body[0] == b)
+            {
+                if (!CollisionDetector::boxAndBox((*b), , &planeData[i]))
+            {
+                planeData[i].reset(planeData[i].contacts.size() + planeData[i].contactsLeft);
+            }
+        
+            cr.resolveContacts(planeData[i].contacts,
+                               planeData[i].contacts.size(),
+                               duration);
+            }
+        }
     }
 }
 

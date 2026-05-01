@@ -24,6 +24,8 @@ public:
                  const glm::mat3& inverseInertiaTensor,
                  const glm::vec3& halfWidths);
 
+    void newContacts();
+    
     void startFrame();
     
     void runPhysics(float duration);
@@ -42,7 +44,9 @@ private:
     CollisionPlane floor {glm::vec3(0.0f,1.0f,0.0f), 
                           -1.0f};
     
-    CollisionData data;
+    std::vector<CollisionData> planeData;
+
+    std::vector<CollisionData> boxData;
 
     ContactResolver cr;
 

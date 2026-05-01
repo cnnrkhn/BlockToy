@@ -87,14 +87,14 @@ struct CollisionData
     /*
         the friction used for collisions
     */
-    float friction = 0.1f;
+    float friction = 0.0f;
 
     /*
         the restitution used for collisions
         where 0 is maximum stickiness and
         1 is maximum bounciness
     */
-    float restitution = 0.9f;
+    float restitution = 0.0f;
 
     /*
         how far objects can be beforee generating a contact 
