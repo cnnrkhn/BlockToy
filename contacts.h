@@ -31,11 +31,11 @@ public:
                      float restitution);
     
 private:
-    glm::mat3 contactToWorld;
+    glm::mat3 contactToWorld = glm::mat3(0.0f);
 
-    glm::vec3 contactVelocity;
+    glm::vec3 contactVelocity = glm::vec3(0.0f);
 
-    float desiredDeltaVelocity;
+    float desiredDeltaVelocity = 0;
 
     glm::vec3 relativeContactPosition[2];
 

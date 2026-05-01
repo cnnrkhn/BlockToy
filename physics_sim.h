@@ -30,6 +30,8 @@ public:
 
     std::vector<glm::vec3> getPositions();
 
+    std::vector<glm::vec3> getVelocities();
+
     std::vector<glm::quat> getOrientations();
 
 private:

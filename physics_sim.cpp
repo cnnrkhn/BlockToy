@@ -49,6 +49,7 @@ void PhysicsSim::startFrame()
 
 void PhysicsSim::runPhysics(float duration)
 {
+    uint32_t i = 0;
     for (CollisionBoxes::iterator b = boxes.begin();
          b != boxes.end(); 
          b++)
@@ -64,6 +65,7 @@ void PhysicsSim::runPhysics(float duration)
         cr.resolveContacts(data.contacts,
                            data.contacts.size(),
                            duration);
+        i++;
     }
 }
 
@@ -81,6 +83,22 @@ std::vector<glm::vec3> PhysicsSim::getPositions()
     }
 
     return positions;
+}
+
+std::vector<glm::vec3> PhysicsSim::getVelocities()
+{
+    std::vector<glm::vec3> velocities;
+
+    for (CollisionBoxes::iterator b = boxes.begin();
+         b != boxes.end(); 
+         b++)
+    {
+        glm::vec3 pos = b->body->getPosition();
+
+        velocities.push_back(pos);
+    }
+
+    return velocities;
 }
 
 std::vector<glm::quat> PhysicsSim::getOrientations()

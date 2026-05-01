@@ -183,7 +183,7 @@ int main()
     // initialize physics simulation
     PhysicsSim ps;
 
-    float invMass = 0.5f;
+    float invMass = 1.0f;
 
     // calculate moment of inertia for a box
     float hh = 2 * 2;
@@ -199,11 +199,11 @@ int main()
 
     // add rigid body
     ps.addBox(invMass,          // inverse mass
-               0.99f,            // linear damping
-               0.99f,            // angular damping
+               0.90f,            // linear damping
+               0.90f,            // angular damping
                position, // position
                q,                // orientation
-               glm::vec3(0,0,0),  // velocity
+               glm::vec3(0.0f,0,0),  // velocity
                glm::vec3(0,0,0),  // rotation
                glm::inverse(momentInertia), // inverse moment of inertia
 			   glm::vec3(1,1,1)); // halfWidths
@@ -246,8 +246,17 @@ int main()
 		secondCounter += ellapsedTime;
 		if (secondCounter >= 1.0f)
 		{
+			//glm::vec3 velocities = ps.getVelocities()[0];
 			//cout << "FPS:" << numFrames << endl;
 			//cout << "Ellapsed Time:" << ellapsedTime << endl;
+			//float kinetic = 0.5f * glm::dot(velocities, velocities);
+			//cout << "Kinetic Energy: " << kinetic << endl;
+
+			//float x = velocities.x;
+			//float y = velocities.y;
+			//float z = velocities.z;
+			//cout << "Velocity x: " << x << " y: " << y << " z: " << z << endl;
+
 			numFrames = 0;
 			secondCounter -= 1.0f;
 		}
