@@ -203,8 +203,8 @@ int main()
                0.99f,            // angular damping
                position, // position
                q,                // orientation
-               glm::vec3(0,1,0),  // velocity
-               glm::vec3(-0.5f,0.5f,0.5f),  // rotation
+               glm::vec3(-0.5f,1,0),  // velocity
+               glm::vec3(-0.5f,1.0f,1.0f),  // rotation
                glm::inverse(momentInertia), // inverse moment of inertia
 			   glm::vec3(1.0f,1.0f,1.0f)); // halfWidths
 
