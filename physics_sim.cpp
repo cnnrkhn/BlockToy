@@ -49,7 +49,6 @@ void PhysicsSim::startFrame()
 
 void PhysicsSim::runPhysics(float duration)
 {
-    uint32_t i = 0;
     for (CollisionBoxes::iterator b = boxes.begin();
          b != boxes.end(); 
          b++)
@@ -65,7 +64,6 @@ void PhysicsSim::runPhysics(float duration)
         cr.resolveContacts(data.contacts,
                            data.contacts.size(),
                            duration);
-        i++;
     }
 }
 

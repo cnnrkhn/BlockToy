@@ -12,6 +12,7 @@
 #include "shader.h"
 
 #include "physics_sim.h"
+#include "create_blocks.h"
 
 using namespace std; 
 
@@ -254,11 +255,11 @@ int main()
 			//float kinetic = 0.5f * glm::dot(velocities, velocities);
 			//cout << "Kinetic Energy: " << kinetic << endl;
 
-			glm::vec3 rotations = ps.getRotations()[0];
-			float x = rotations.x;
-			float y = rotations.y;
-			float z = rotations.z;
-			cout << "Rotation x: " << x << " y: " << y << " z: " << z << endl;
+			//glm::vec3 rotations = ps.getRotations()[0];
+			//float x = rotations.x;
+			//float y = rotations.y;
+			//float z = rotations.z;
+			//cout << "Rotation x: " << x << " y: " << y << " z: " << z << endl;
 
 			//float x = position.x;
 			//float y = position.y;
@@ -292,25 +293,11 @@ int main()
 
         glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-		glVertexAttribPointer(
-			0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
-			3,                  // size
-			GL_FLOAT,           // type
-			GL_FALSE,           // normalized?
-			0,                  // stride
-			(void*)0            // array buffer offset
-		);
+		glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,(void*)0);
 
         glEnableVertexAttribArray(1);
 		glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-		glVertexAttribPointer(
-			1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
-			3,                                // size
-			GL_FLOAT,                         // type
-			GL_FALSE,                         // normalized?
-			0,                                // stride
-			(void*)0                          // array buffer offset
-		);
+		glVertexAttribPointer(1,3,GL_FLOAT,GL_FALSE,0,(void*)0);
 
         glDrawArrays(GL_TRIANGLES, 0, 12*3); // 12*3 indices starting at 0 -> 12 triangles
 

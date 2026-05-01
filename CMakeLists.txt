@@ -45,6 +45,10 @@ add_executable(BlockToy
     fine_collision.cpp
     fine_collision.h
     math_helper.h
+    vboindex.cpp
+    vboindex.h
+    create_blocks.cpp
+    create_blocks.h
 ) 
 
 
